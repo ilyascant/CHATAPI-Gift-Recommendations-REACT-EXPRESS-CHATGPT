@@ -9,6 +9,7 @@ const Recommendation = () => {
   const [response, setResponse] = useState([]);
   const [gifts, setGifts] = useState([]);
   const [localMessages, setLocalMessages] = useState([]);
+  const [images, setImages] = useState([]);
 
   const [{ messages, recipient, userInfo, password }, dispatch] = useAIStateValue();
 
@@ -65,7 +66,6 @@ const Recommendation = () => {
   };
 
   const callAPI = async () => {
-    console.log("CALL API");
     setLoading(true);
     let response;
 
@@ -79,17 +79,49 @@ const Recommendation = () => {
       setGifts(assistantResponse);
       const fetchedData = await fetchData(assistantResponse.hediyeler);
       setResponse(fetchedData);
-      console.log(fetchedData);
     }
     setLoading(false);
   };
 
+  const steamImages = async (data) => {
+    console.log(31);
+    try {
+      const url = (process.env.REACT_APP_NODE_ENV === "production" ? process.env.REACT_APP_PRODUCTION : process.env.REACT_APP_LOCAL) + "/stream-images";
+
+      const queryParams = new URLSearchParams({
+        password: password,
+        data: JSON.stringify(data),
+      });
+
+      const fetchOptions = {
+        method: "GET",
+        credentials: "include",
+      };
+
+      const response = await fetch(url + "?" + queryParams.toString(), fetchOptions);
+      const reader = response.body.pipeThrough(new TextDecoderStream()).pipeTo(
+        new WritableStream({
+          write(chunk) {
+            setImages((prev) => [...prev, JSON.parse(chunk)]);
+          },
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useMemo(async () => {
-    if (localMessages.length !== 0) {
+    if (localMessages?.length !== 0) {
       await callAPI();
     }
   }, [localMessages]);
 
+  useMemo(async () => {
+    if (response?.length !== 0) {
+      const streamImage = await steamImages(gifts.hediyeler);
+    }
+  }, [response]);
   return (
     <>
       <div className={`${loading ? "flex" : "hidden"} fixed z-50 inset-0 items-center justify-center bg-gray-500 bg-opacity-75`}>
@@ -110,10 +142,13 @@ const Recommendation = () => {
         <div className="w-3/4 xl:w-9/12 mx-auto mt-5 text-center  border-1 border-solid bg-white border-gray-300 rounded shadow-md">
           <h1 className="text-2xl font-bold mt-8">Recommendation</h1>
           <div className="flex p-4 flex-wrap justify-evenly">
-            {console.log(gifts)}
             {!loading &&
               gifts?.hediyeler?.map((el, index) => {
-                return response[index].length > 0 && <SliderCard loading={loading} key={index} name={el?.isim} items={response[index]} />;
+                return (
+                  response[index].length > 0 && (
+                    <SliderCard images={images.length >= index && images[index]} loading={loading} key={index} name={el?.isim} items={response[index]} />
+                  )
+                );
               })}
           </div>
         </div>

@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const SliderCard = ({ name, items, loading }) => {
+const SliderCard = ({ name, items, images, loading }) => {
   const myRefs = useRef({});
 
   const sliderRef = useRef(null);
@@ -28,7 +28,6 @@ const SliderCard = ({ name, items, loading }) => {
     prevArrow: <CustomPrevArrow />,
     nextArrow: <CustomNextArrow />,
   };
-
   return (
     !loading && (
       <div className="relative xl:w-[40%] lg:w-[50%] w-full mt-4 mb-16">
@@ -47,7 +46,7 @@ const SliderCard = ({ name, items, loading }) => {
                   myRefs.current[index].current.click();
                 }}
                 className="cursor-pointer relative flex h-full border rounded-lg shadow-md mx-2 overflow-hidden">
-                <img src={item?.image} alt="" className="z-10 absolute w-full h-full inset-0 object-cover" />
+                <img src={images?.length >= index ? images[index]?.image : item?.image} alt="" className="z-10 absolute w-full h-full inset-0 object-cover" />
                 <div className="w-full h-[30%] z-20 mt-auto backdrop-blur-md bg-black/20">
                   <p className="mb-1 text-white text-sm text-ellipsis overflow-hidden">
                     {(() => {

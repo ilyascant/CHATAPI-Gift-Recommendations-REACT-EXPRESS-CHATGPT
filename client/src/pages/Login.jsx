@@ -18,7 +18,7 @@ const Login = () => {
 
     if (userPassword) {
       try {
-        const results = await axios({
+        const result = await axios({
           url: (process.env.REACT_APP_NODE_ENV === "production" ? process.env.REACT_APP_PRODUCTION : process.env.REACT_APP_LOCAL) + "/login",
           data: { password: userPassword },
           method: "post",
@@ -32,7 +32,7 @@ const Login = () => {
         setUserPassword(userPassword);
         dispatch({ type: AIActionType.SET_USER_PASSWORD, password: userPassword });
         navigate("/", { replace: true });
-        return results?.data;
+        return result?.data;
       } catch (error) {
         console.log(error);
         alert("WRONG PASSWORD");

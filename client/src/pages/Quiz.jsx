@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Quiz = () => {
   const navigate = useNavigate();
-  const [totalQuestionCount, setTotalQuestionCount] = useState(8);
+  const [totalQuestionCount, setTotalQuestionCount] = useState(1);
   const [canSkip, setCanSkip] = useState(false);
   const [loading, setLoading] = useState(true);
   const [pageLoading, setPageLoading] = useState(true);
@@ -48,12 +48,10 @@ const Quiz = () => {
   };
 
   const callAPI = async () => {
-    console.log("CALL API");
     setLoading(true);
     let response = await fetchChatAPI();
 
     if (response) {
-      console.log(response);
       const assistantResponse = JSON.parse(response.choices[0].message.content);
       setQuestions((prev) => [...prev, { question: assistantResponse.question, options: assistantResponse.options }]);
     }
@@ -70,7 +68,6 @@ const Quiz = () => {
     await callAPI();
     setCurrentQuestionIndex(currentQuestionIndex + 1);
     setCanSkip(false);
-    console.log(messages);
     // }
   }, [messages]);
 
