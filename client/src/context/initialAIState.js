@@ -20,7 +20,7 @@ export const suggestionPrompt = (_userInfo, _recipient, _localMessages) =>
     _recipient.recipientGender
   }. Here are the questions I asked, along with the options ${_recipient} chose in JSON format:\n${JSON.stringify(
     _localMessages
-  )}.\n\nI would like you to suggest unique and creative, hearth-warming gift ideas from Trendyol.com for my ${_recipient}. Feel free to think outside the box and suggest items that go beyond the given options. Please provide between ${
+  )}.\n\nI would like you to suggest gift ideas from Trendyol.com for my ${_recipient}. Feel free to think outside the box and suggest items that go beyond the given options. Please provide between ${
     _localMessages.length * 1.5
   } - ${parseInt(
     _localMessages.length * 2.5,
