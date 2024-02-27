@@ -11,6 +11,11 @@ const Recommendation = () => {
   const [localMessages, setLocalMessages] = useState([]);
   const [images, setImages] = useState([]);
 
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
   const [{ messages, recipient, userInfo, password }, dispatch] = useAIStateValue();
 
   useEffect(() => {
@@ -84,7 +89,6 @@ const Recommendation = () => {
   };
 
   const steamImages = async (data) => {
-    console.log(31);
     try {
       const url = (process.env.REACT_APP_NODE_ENV === "production" ? process.env.REACT_APP_PRODUCTION : process.env.REACT_APP_LOCAL) + "/stream-images";
 
@@ -122,6 +126,22 @@ const Recommendation = () => {
       const streamImage = await steamImages(gifts.hediyeler);
     }
   }, [response]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       <div className={`${loading ? "flex" : "hidden"} fixed z-50 inset-0 items-center justify-center bg-gray-500 bg-opacity-75`}>
@@ -139,14 +159,21 @@ const Recommendation = () => {
           }}>
           CALL API
         </button> */}
-        <div className="w-3/4 xl:w-9/12 mx-auto mt-5 text-center  border-1 border-solid bg-white border-gray-300 rounded shadow-md">
+        <div className="w-[90%] xl:w-9/12 mx-auto mt-5 text-center  border-1 border-solid bg-white border-gray-300 rounded shadow-md">
           <h1 className="text-2xl font-bold mt-8">Recommendation</h1>
           <div className="flex p-4 flex-wrap justify-evenly">
             {!loading &&
               gifts?.hediyeler?.map((el, index) => {
                 return (
                   response[index].length > 0 && (
-                    <SliderCard images={images.length >= index && images[index]} loading={loading} key={index} name={el?.isim} items={response[index]} />
+                    <SliderCard
+                      windowSize={windowSize}
+                      images={images.length >= index && images[index]}
+                      loading={loading}
+                      key={index}
+                      name={el?.isim}
+                      items={response[index]}
+                    />
                   )
                 );
               })}

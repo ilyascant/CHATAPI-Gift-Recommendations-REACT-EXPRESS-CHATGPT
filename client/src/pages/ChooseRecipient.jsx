@@ -46,19 +46,19 @@ const ChooseRecipient = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="flex flex-col text-xl font-semibold gap-8 w-3/4 xl:w-1/2 bg-white p-8 rounded shadow-md">
+      <div className="flex flex-col text-xl font-semibold gap-8 w-[90%] xl:w-9/12 bg-white p-8 rounded shadow-md">
         <h1>Who are you buying for?</h1>
 
         <div className="flex flex-wrap justify-evenly gap-8">
           {options.map((el) => {
             return (
-              <div key={el.text}>
+              <div className="lg:w-36 md:w-32 w-20 aspect-square flex flex-col justify-center items-center" key={el.text}>
                 <div
                   onClick={(e) => setSelectedRecipient(el.text)}
-                  className={`w-32 aspect-square cursor-pointer rounded ${
+                  className={`cursor-pointer rounded ${
                     el.text == selectedRecipient ? "border-2 border-blue-500" : "shadow-md hover:scale-110 duration-300 transition-all"
                   }`}>
-                  <img className="h-full pointer-events-none object-cover overflow-hidden object-top" src={el.img} alt="" />
+                  <img className="w-full aspect-square pointer-events-none object-cover overflow-hidden object-top" src={el.img} alt="" />
                 </div>
                 <p className="text-lg font-semibold mt-1">{el.text}</p>
               </div>

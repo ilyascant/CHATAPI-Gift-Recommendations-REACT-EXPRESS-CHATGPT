@@ -128,7 +128,7 @@ const Quiz = () => {
                   <li
                     key={index}
                     onClick={(e) => handleOptionClick(e, option)}
-                    className="w-40 h-40 hover:scale-110 p-2 text-center bg-gray-100 border-1 border-solid border-gray-300 m-2 cursor-pointer rounded shadow-md transition-all duration-300 select-none hover:bg-gray-300 active:bg-gray-500 flex items-center justify-center">
+                    className="lg:w-40 lg:h-40 hover:scale-110 p-2 text-center bg-gray-100 border-1 border-solid border-gray-300 m-2 cursor-pointer rounded shadow-md transition-all duration-300 select-none hover:bg-gray-300 active:bg-gray-500 flex items-center justify-center">
                     <p className="text-ellipsis overflow-hidden w-full">{option}</p>
                   </li>
                 ))}
