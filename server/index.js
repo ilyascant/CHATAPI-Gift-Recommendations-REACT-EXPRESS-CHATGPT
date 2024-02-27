@@ -109,9 +109,7 @@ app.get("/api/stream-images", async (req, res) => {
     if (data.length > 0) {
       res.write(`${JSON.stringify(data)}`);
     }
-    if (i < searchQueries.length - 1) {
-      await delay(250);
-    }
+    if (i < searchQueries.length - 1) await delay(250);
   }
 
   res.end();
