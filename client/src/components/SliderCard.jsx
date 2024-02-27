@@ -21,6 +21,7 @@ const SliderCard = ({ windowSize, name, items, images, loading }) => {
   );
   const settings = {
     infinite: true,
+    autoplay: true,
     speed: 500,
     slidesToShow: windowSize.width > 600 ? 3 : windowSize.width > 450 ? 2 : 1,
     slidesToScroll: windowSize.width > 600 ? 3 : windowSize.width > 450 ? 2 : 1,

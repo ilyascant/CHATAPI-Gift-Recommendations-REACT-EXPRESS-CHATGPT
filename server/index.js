@@ -40,10 +40,11 @@ app.post("/api/chatapi", isLoggedIn, async (req, res) => {
   if (req.body?.messages) {
     try {
       response = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo-0125",
+        model: "gpt-3.5-turbo-1106",
         response_format: { type: "json_object" },
         messages: req.body.messages,
         temperature: 1,
+        seed: Math.floor(Math.random() * 100_000),
         // temperature: req.body?.temp || 0.8,
       });
 
@@ -61,10 +62,12 @@ app.post("/api/chatapi/recommendation", isLoggedIn, async (req, res) => {
   if (req.body?.messages) {
     try {
       response = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo-0125",
+        model: "gpt-3.5-turbo-1106",
         response_format: { type: "json_object" },
         messages: req.body.messages,
         temperature: 1,
+        seed: Math.floor(Math.random() * 100_000),
+
         // temperature: req.body?.temp || 0.8,
       });
 
