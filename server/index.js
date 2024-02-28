@@ -110,7 +110,7 @@ app.get("/api/stream-images", async (req, res) => {
   for (let i = 0; i < searchQueries.length; i++) {
     const data = await fetchTrendyolProductImages(page, searchQueries[i]);
     if (data.length > 0) {
-      res.write(JSON.stringify(data));
+      res.write(`${JSON.stringify(data)}\n`);
     }
     if (i < searchQueries.length - 1) await delay(250);
   }
