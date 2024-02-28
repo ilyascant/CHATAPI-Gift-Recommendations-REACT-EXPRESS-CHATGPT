@@ -24,7 +24,15 @@ const SliderCard = ({ windowSize, name, items, images, loading }) => {
     autoplay: true,
     speed: 500,
     slidesToShow:
-      items?.length >= 3 ? (windowSize.width > 600 ? 3 : windowSize.width > 450 ? 2 : 1) : items?.length > 1 && windowSize.width > 450 ? 2 : items?.length,
+      items?.length >= 3
+        ? windowSize.width > 600
+          ? 3
+          : windowSize.width > 450
+          ? 2
+          : 1
+        : items?.length > 1 && windowSize.width > 450
+        ? 2
+        : items?.length,
 
     slidesToScroll: windowSize.width > 600 ? 3 : windowSize.width > 450 ? 2 : 1,
     prevArrow: <CustomPrevArrow />,
@@ -48,7 +56,11 @@ const SliderCard = ({ windowSize, name, items, images, loading }) => {
                   myRefs.current[index].current.click();
                 }}
                 className="cursor-pointer relative flex h-full border rounded-lg shadow-md mx-2 overflow-hidden">
-                <img src={images?.length >= index ? images[index]?.image : item?.image} alt="" className="z-10 absolute w-full h-full inset-0 object-cover" />
+                <img
+                  src={images?.length >= index ? images[index]?.image : item?.image}
+                  alt=""
+                  className="z-10 absolute w-full h-full inset-0 object-cover"
+                />
                 <div className="w-full h-[30%] z-20 mt-auto backdrop-blur-md bg-black/20">
                   <p className="mb-1 text-white text-sm text-ellipsis overflow-hidden">
                     {(() => {

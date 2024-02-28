@@ -25,7 +25,10 @@ const Recommendation = () => {
   const fetchData = async (data) => {
     try {
       const results = await axios({
-        url: (process.env.REACT_APP_NODE_ENV === "production" ? process.env.REACT_APP_PRODUCTION : process.env.REACT_APP_LOCAL) + "/scrape",
+        url:
+          (process.env.REACT_APP_NODE_ENV === "production"
+            ? process.env.REACT_APP_PRODUCTION
+            : process.env.REACT_APP_LOCAL) + "/scrape",
         data: { password: password, data: data },
         method: "post",
         withCredentials: "true",
@@ -44,7 +47,10 @@ const Recommendation = () => {
   const fetchChatAPI = async () => {
     try {
       const results = await axios({
-        url: (process.env.REACT_APP_NODE_ENV === "production" ? process.env.REACT_APP_PRODUCTION : process.env.REACT_APP_LOCAL) + "/chatapi",
+        url:
+          (process.env.REACT_APP_NODE_ENV === "production"
+            ? process.env.REACT_APP_PRODUCTION
+            : process.env.REACT_APP_LOCAL) + "/chatapi",
         data: {
           password: password,
           messages: [
@@ -89,7 +95,10 @@ const Recommendation = () => {
   };
   const steamImages = async (data) => {
     try {
-      const url = (process.env.REACT_APP_NODE_ENV === "production" ? process.env.REACT_APP_PRODUCTION : process.env.REACT_APP_LOCAL) + "/stream-images";
+      const url =
+        (process.env.REACT_APP_NODE_ENV === "production"
+          ? process.env.REACT_APP_PRODUCTION
+          : process.env.REACT_APP_LOCAL) + "/stream-images";
 
       const queryParams = new URLSearchParams({
         password: password,
@@ -102,19 +111,32 @@ const Recommendation = () => {
       };
 
       const response = await fetch(url + "?" + queryParams.toString(), fetchOptions);
-      const reader = response.body.pipeThrough(new TextDecoderStream()).pipeTo(
-        new WritableStream({
-          write(chunk) {
-            const currentImg = JSON.parse(chunk);
-            try {
-              setImages((prev) => [...prev, currentImg]);
-            } catch (error) {
-              console.log("chunk ", chunk, "\nerror ", error);
-              setImages((prev) => [...prev, []]);
-            }
-          },
-        })
-      );
+      const reader = response.body
+        .pipeThrough(new TextDecoderStream())
+        .pipeThrough(
+          new TransformStream({
+            transform(chunk, controller) {
+              for (const item of chunk.split("\n")) {
+                try {
+                  controller.enqueue(JSON.parse(item));
+                } catch (error) {}
+              }
+            },
+          })
+        )
+        .pipeTo(
+          new WritableStream({
+            write(chunk) {
+              const currentImg = chunk;
+              try {
+                setImages((prev) => [...prev, currentImg]);
+              } catch (error) {
+                console.log("chunk ", chunk, "\nerror ", error);
+                setImages((prev) => [...prev, []]);
+              }
+            },
+          })
+        );
     } catch (error) {
       console.log(error);
     }
@@ -149,11 +171,16 @@ const Recommendation = () => {
 
   return (
     <>
-      <div className={`${loading ? "flex" : "hidden"} fixed z-50 inset-0 items-center justify-center bg-gray-500 bg-opacity-75`}>
+      <div
+        className={`${
+          loading ? "flex" : "hidden"
+        } fixed z-50 inset-0 items-center justify-center bg-gray-500 bg-opacity-75`}>
         <div
           className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-white border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
           role="status">
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+            Loading...
+          </span>
         </div>
       </div>
       <div className="min-h-full flex items-center justify-center bg-gray-100">

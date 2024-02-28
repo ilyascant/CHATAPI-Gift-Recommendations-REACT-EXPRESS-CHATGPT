@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Quiz = () => {
   const navigate = useNavigate();
-  const [totalQuestionCount, setTotalQuestionCount] = useState(8);
+  const [totalQuestionCount, setTotalQuestionCount] = useState(3);
   const [canSkip, setCanSkip] = useState(false);
   const [loading, setLoading] = useState(true);
   const [pageLoading, setPageLoading] = useState(true);
