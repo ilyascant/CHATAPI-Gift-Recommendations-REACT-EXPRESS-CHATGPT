@@ -109,8 +109,7 @@ const Recommendation = () => {
             try {
               setImages((prev) => [...prev, currentImg]);
             } catch (error) {
-              console.log("error ", error);
-              console.log("chunk ", chunk);
+              console.log("chunk ", chunk, "\nerror ", error);
               setImages((prev) => [...prev, []]);
             }
           },
