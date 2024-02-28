@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Quiz = () => {
   const navigate = useNavigate();
-  const [totalQuestionCount, setTotalQuestionCount] = useState(3);
+  const [totalQuestionCount, setTotalQuestionCount] = useState(8);
   const [canSkip, setCanSkip] = useState(false);
   const [loading, setLoading] = useState(true);
   const [pageLoading, setPageLoading] = useState(true);
@@ -20,7 +20,10 @@ const Quiz = () => {
   const fetchChatAPI = async () => {
     try {
       const results = await axios({
-        url: (process.env.REACT_APP_NODE_ENV === "production" ? process.env.REACT_APP_PRODUCTION : process.env.REACT_APP_LOCAL) + "/chatapi",
+        url:
+          (process.env.REACT_APP_NODE_ENV === "production"
+            ? process.env.REACT_APP_PRODUCTION
+            : process.env.REACT_APP_LOCAL) + "/chatapi",
         data: {
           password: password,
           messages: [
@@ -99,17 +102,24 @@ const Quiz = () => {
     </button>
   ) : (
     <>
-      <div className={`${loading ? "flex" : "hidden"} fixed z-50 inset-0 items-center justify-center bg-gray-500 bg-opacity-75`}>
+      <div
+        className={`${
+          loading ? "flex" : "hidden"
+        } fixed z-50 inset-0 items-center justify-center bg-gray-500 bg-opacity-75`}>
         <div
           className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-white border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
           role="status">
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+            Loading...
+          </span>
         </div>
       </div>
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="w-3/4 xl:w-1/2 mx-auto mt-5 text-center p-4 border-1 border-solid bg-white rounded shadow-md">
           <div className="w-full">
-            <span className="text-sm w-fit block ml-auto mb-2">{currentQuestionIndex + 1 + " / " + totalQuestionCount}</span>
+            <span className="text-sm w-fit block ml-auto mb-2">
+              {currentQuestionIndex + 1 + " / " + totalQuestionCount}
+            </span>
             <div className="relative h-2 w-full bg-gray-100 rounded-full">
               <div
                 className="absolute top-0 left-0 h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full"
