@@ -23,7 +23,9 @@ const SliderCard = ({ windowSize, name, items, images, loading }) => {
     infinite: true,
     autoplay: true,
     speed: 500,
-    slidesToShow: windowSize.width > 600 ? 3 : windowSize.width > 450 ? 2 : 1,
+    slidesToShow:
+      items?.length >= 3 ? (windowSize.width > 600 ? 3 : windowSize.width > 450 ? 2 : 1) : items?.length > 1 && windowSize.width > 450 ? 2 : items?.length,
+
     slidesToScroll: windowSize.width > 600 ? 3 : windowSize.width > 450 ? 2 : 1,
     prevArrow: <CustomPrevArrow />,
     nextArrow: <CustomNextArrow />,
