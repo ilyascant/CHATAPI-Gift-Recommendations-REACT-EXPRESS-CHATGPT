@@ -46,7 +46,6 @@ const Quiz = () => {
       return null;
     }
   };
-
   const callAPI = async () => {
     setLoading(true);
     let response = await fetchChatAPI();

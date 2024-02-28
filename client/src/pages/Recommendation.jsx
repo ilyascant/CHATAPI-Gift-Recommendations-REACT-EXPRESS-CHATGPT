@@ -87,7 +87,6 @@ const Recommendation = () => {
     }
     setLoading(false);
   };
-
   const steamImages = async (data) => {
     try {
       const url = (process.env.REACT_APP_NODE_ENV === "production" ? process.env.REACT_APP_PRODUCTION : process.env.REACT_APP_LOCAL) + "/stream-images";
@@ -106,7 +105,14 @@ const Recommendation = () => {
       const reader = response.body.pipeThrough(new TextDecoderStream()).pipeTo(
         new WritableStream({
           write(chunk) {
-            setImages((prev) => [...prev, JSON.parse(chunk)]);
+            const currentImg = JSON.parse(chunk);
+            try {
+              setImages((prev) => [...prev, currentImg]);
+            } catch (error) {
+              console.log("error ", error);
+              console.log("chunk ", chunk);
+              setImages((prev) => [...prev, []]);
+            }
           },
         })
       );
