@@ -21,7 +21,6 @@ app.use(
     origin: true,
   })
 );
-app.use(express.json({ extended: false }));
 
 const delay = async (ms) => await new Promise((resolve) => setTimeout(resolve, ms));
 
