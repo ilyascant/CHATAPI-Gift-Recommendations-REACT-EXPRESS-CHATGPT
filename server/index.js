@@ -22,6 +22,8 @@ app.use(
   })
 );
 
+app.use(express.json({ extended: false }));
+
 const delay = async (ms) => await new Promise((resolve) => setTimeout(resolve, ms));
 
 app.post("/api/login", async (req, res) => {
