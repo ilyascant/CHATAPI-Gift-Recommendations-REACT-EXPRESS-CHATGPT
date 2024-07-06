@@ -7,3 +7,5 @@
 - **Password:** hYNt8xnimv0qDRV
 
 ![chat_3](https://github.com/ilyascant/CHATAPI-Gift-Recommendations-REACT-EXPRESS-CHATGPT/assets/79863003/ba5c2e30-52f0-4f17-b068-d2cd6f8373c0)
+
+<img src="https://t.bkit.co/w_6688c8e08c913.gif" />
